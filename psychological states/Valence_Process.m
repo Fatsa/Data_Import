@@ -3,9 +3,9 @@
 % return
 % valence_Lines means the information of valence
 % valence_Count means the info line num + 1
-function [valence_Lines, valence_Count]=Valence_Process(fileName, pathName)
+function [valence_Lines, valence_Count,valence_num]=Valence_Process(fileName, pathName,valence_num)
     % read the text by each sentence
-    valence_Lines=cell(50000,1);
+    valence_Lines=cell(50000,2);
     % count represent the count index of the line
     valence_Count=1;
     % combine the file path and the file name
@@ -20,12 +20,27 @@ function [valence_Lines, valence_Count]=Valence_Process(fileName, pathName)
         fprintf('It is a error to open the file in Transcript_Process.m)\n');
         exit(EXIT_FAILURE);
     else 
-        % check whehter the iosStream reach the end of the file stream
-        while ~feof(ioStream)
-            %read each line
-            titleLine = fgetl(ioStream);
-            valence_Lines{valence_Count,1}=titleLine;
-            valence_Count=valence_Count+1;
+        if (0 == valence_num)
+            % check whehter the iosStream reach the end of the file stream
+            while ~feof(ioStream)
+                %read each line
+                titleLine = fgetl(ioStream);
+                b = strsplit(titleLine,' ');
+                valence_Lines{valence_Count,1}=str2double(b{1});
+                valence_Lines{valence_Count,2}=str2double(b{2});
+                valence_Count=valence_Count+1;
+            end
+            valence_num=valence_num+1;
+        else
+            while ~feof(ioStream)
+                %read each line
+                titleLine = fgetl(ioStream);
+                b = strsplit(titleLine,' ');
+                valence_Lines{valence_Count,1}=(valence_Lines{valence_Count,1}*valence_num+str2double(b{1}))/(valence_num+1);
+                valence_Lines{valence_Count,2}=(valence_Lines{valence_Count,2}*valence_num+str2double(b{2}))/(valence_num+1);
+                valence_Count=valence_Count+1;
+            end
+            valence_num=valence_num+1;
         end
     end
     % close the file stream

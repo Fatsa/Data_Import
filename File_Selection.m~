@@ -58,8 +58,10 @@
 %
 % contempt_Lines, 
 % contempt_Count
-function [valence_Lines, valence_Count,arousal_Lines, arousal_Count,power_Lines, power_Count,expectation_Lines, expectation_Count,intensity_Lines, intensity_Count,fear_Lines, fear_Count,anger_Lines, anger_Count,happiness_Lines, happiness_Count,saddness_Lines, saddness_Count,disgust_Lines, disgust_Count,contempt_Lines, contempt_Count,amusement_Lines, amusement_Count]=File_Selection (fileName, pathName)    
+function [wordLevel_alignedTranscript_User,wordLevel_alignedTranscript_User_Line_Count,valence_Lines, valence_Count,arousal_Lines, arousal_Count,power_Lines, power_Count,expectation_Lines, expectation_Count,intensity_Lines, intensity_Count,fear_Lines, fear_Count,anger_Lines, anger_Count,happiness_Lines, happiness_Count,saddness_Lines, saddness_Count,disgust_Lines, disgust_Count,contempt_Lines, contempt_Count,amusement_Lines, amusement_Count]=File_Selection (fileName, pathName)    
     %initialization
+    wordLevel_alignedTranscript_User=cell(50000,1);
+    
     valence_num=0;
     valence_Count=1;
     valence_Lines=cell(50000,2);
@@ -109,10 +111,24 @@ function [valence_Lines, valence_Count,arousal_Lines, arousal_Count,power_Lines,
     amusement_Lines=cell(50000,2);
     
     for n = 1: length(fileName)
-        % DV means the Valence
-        if (0==isempty(strfind(fileName{n},'DV')))
-            [valence_Lines, valence_Count,valence_num]=Data_Process(valence_Lines,fileName{n}, pathName,valence_num);
-            fprintf('%s has been matched file\n',fileName{n})
+%         % alignedTranscript means the text transcript used in the video
+%         % fileName doesn't contain wordLevel 
+%         % fileName contain alignedTranscript
+%         if ((0~=isempty(strfind(fileName{n},'wordLevel')))&&(0==isempty(strfind(fileName{n},'alignedTranscript'))))
+%             Transcript_Process (fileName{n}, pathName);
+%             transcript_Label=1;
+
+        % wordLevel_alignedTranscript_..._user means the user's transcript 
+        % fileName contain User
+        % fileName contain wordLevel_alignedTranscript
+        % wordLevel_alignedTranscript_User stores all the user's text
+        % count means (the num of text line + 1)
+        if ((0==isempty(strfind(fileName{n},'user')))&&(0==isempty(strfind(fileName{n},'wordLevel_alignedTranscript'))))
+            [wordLevel_alignedTranscript_User, wordLevel_alignedTranscript_User_Line_Count]=WordLevel_alignedTranscript_Process(fileName{n}, pathName);
+        
+            % DV means the Valence
+        elseif (0==isempty(strfind(fileName{n},'DV')))
+            [valence_Lines, valence_Count,valence_num]=Data_Process(wordLevel_alignedTranscript_User,fileName{n}, pathName,valence_num);
         % DA means the Activation/Arousal
         % fileName doesn't contain DAn
         % fileName doesn't contain DAm
@@ -123,51 +139,40 @@ function [valence_Lines, valence_Count,arousal_Lines, arousal_Count,power_Lines,
         % fileName doesn't contain DAnomSim   
         elseif ((0~=isempty(strfind(fileName{n},'DAn')))&&(0~=isempty(strfind(fileName{n},'DAm')))&&(0~=isempty(strfind(fileName{n},'DAgre')))&&(0~=isempty(strfind(fileName{n},'DAntg')))&&(0~=isempty(strfind(fileName{n},'DASug')))&&(0~=isempty(strfind(fileName{n},'DAInf')))&&(0~=isempty(strfind(fileName{n},'DAnomSim')))&&(0==isempty(strfind(fileName{n},'DA'))))
             [arousal_Lines, arousal_Count,arousal_num]=Data_Process(arousal_Lines,fileName{n}, pathName,arousal_num);
-            fprintf('%s has been matched file\n',fileName{n})
         % DP means the Power
         elseif (0==isempty(strfind(fileName{n},'DP')))
             [power_Lines, power_Count, power_num]=Data_Process(power_Lines, fileName{n}, pathName, power_num);
-            fprintf('%s has been matched file\n',fileName{n})
         % DE means the Anticipation/Expectation
         % fileName doesn't contain DEase
         elseif ((0~=isempty(strfind(fileName{n},'DEase')))&&(0==isempty(strfind(fileName{n},'DE'))))
             [expectation_Lines, expectation_Count, expectation_num]=Data_Process(power_Lines, fileName{n}, pathName, expectation_num);
-            fprintf('%s has been matched file\n',fileName{n})
         % DI means the Intensity
         % fileName doesn't contain DIntr
         elseif ((0~=isempty(strfind(fileName{n},'DIntr')))&&(0==isempty(strfind(fileName{n},'DI'))))
             [intensity_Lines, intensity_Count, intensity_num]=Data_Process(intensity_Lines, fileName{n}, pathName, intensity_num);
-            fprintf('%s has been matched file\n',fileName{n})
         % DFr means the fear
         elseif (0==isempty(strfind(fileName{n},'DFr')))
             [fear_Lines, fear_Count, fear_num]=Data_Process(fear_Lines, fileName{n}, pathName,fear_num);
-            fprintf('%s has been matched file\n',fileName{n})
         % DAn means the anger
         % fileName doesn't contain DAntg
         % fileName doesn't contain DAnomSim
         elseif ((0~=isempty(strfind(fileName{n},'DAntg')))&&(0~=isempty(strfind(fileName{n},'DAnomSim')))&&(0==isempty(strfind(fileName{n},'DAn'))))
             [anger_Lines, anger_Count, anger_num]=Data_Process(anger_Lines, fileName{n}, pathName, anger_num);
-            fprintf('%s has been matched file\n',fileName{n})
         % DHp means happiness
         elseif (0==isempty(strfind(fileName{n},'DHp')))
             [happiness_Lines, happiness_Count, happiness_num]=Data_Process(anger_Lines, fileName{n}, pathName, happiness_num);
-            fprintf('%s has been matched file\n',fileName{n})
         % DSd means saddness
         elseif (0==isempty(strfind(fileName{n},'DSd')))
             [saddness_Lines, saddness_Count, saddness_num]=Data_Process(anger_Lines, fileName{n}, pathName, saddness_num);
-            fprintf('%s has been matched file\n',fileName{n})
         % DDg means digust
         elseif (0==isempty(strfind(fileName{n},'DDg')))
             [disgust_Lines, disgust_Count, disgust_num]=Data_Process(disgust_Lines, fileName{n}, pathName, disgust_num);
-            fprintf('%s has been matched file\n',fileName{n})
         % DCt means contempt
         elseif (0==isempty(strfind(fileName{n},'DCt')))
             [contempt_Lines, contempt_Count, contempt_num]=Data_Process(contempt_Lines, fileName{n}, pathName, contempt_num);
-            fprintf('%s has been matched file\n',fileName{n})
         % DAm means amusement
         elseif (0==isempty(strfind(fileName{n},'DAm')))
             [amusement_Lines, amusement_Count,amusement_num]=Data_Process(amusement_Lines, fileName{n}, pathName, amusement_num);
-            fprintf('%s has been matched file\n',fileName{n})
         else
             fprintf('%s is No matched file\n',fileName{n});
         end
@@ -205,21 +210,8 @@ function [lines, count, num]=Data_Process(lines,fileName, pathName,num)
                 %read each line
                 titleLine = fgetl(ioStream);
                 b = strsplit(titleLine,' ');
-                % extract the time vlaue
-                if(isempty(lines{count,1}))
-                    lines{count,1}=str2double(b{1});
-                % recalculated the repeated part of lines
-                else
-                    lines{count,1}=(lines{count,1}*num+str2double(b{1}))/(num+1);
-                end
-                % extract the value of each feature
-                if(isempty(lines{count,2}))
-                    lines{count,2}=str2double(b{2});
-                % recalculated the repeated part of lines
-                else
-                    lines{count,2}=(lines{count,2}*num+str2double(b{2}))/(num+1);
-                end
-                
+                lines{count,1}=(lines{count,1}*num+str2double(b{1}))/(num+1);
+                lines{count,2}=(lines{count,2}*num+str2double(b{2}))/(num+1);
                 count=count+1;
             end
             num=num+1;
