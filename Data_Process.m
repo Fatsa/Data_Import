@@ -30,10 +30,10 @@
 % contempt_Count
 % amusement_Lines,
 % amusement_Count
-function [wordLevel_Transcript,wordLevel_Transcript_Timings,arousal_Data,arousal_Timings,valence_Data, valence_Timings,power_Data, power_Timings,expectation_Data,expectation_Timings,intensity_Data,intensity_Timings,fear_Data,fear_Timings,anger_Data,anger_Timings,happiness_Data,happiness_Timings,saddness_Data,saddness_Timings,disgust_Data,disgust_Timings,contempt_Data,contempt_Timings,amusement_Data,amusement_Timings]=Data_Process(wordLevel_alignedTranscript_User,alignedTranscript_User_Line_Count,valence_Lines, valence_Count,arousal_Lines, arousal_Count,power_Lines,power_Count,expectation_Lines,expectation_Count,intensity_Lines, intensity_Count,fear_Lines, fear_Count,anger_Lines, anger_Count,happiness_Lines, happiness_Count,saddness_Lines, saddness_Count,disgust_Lines, disgust_Count,contempt_Lines, contempt_Count,amusement_Lines, amusement_Count)
+function [wordLevel_Transcript,wordLevel_Transcript_Timings,arousal_Data,arousal_Timings,valence_Data, valence_Timings,power_Data, power_Timings,expectation_Data,expectation_Timings,intensity_Data,intensity_Timings,fear_Data,fear_Timings,anger_Data,anger_Timings,happiness_Data,happiness_Timings,saddness_Data,saddness_Timings,disgust_Data,disgust_Timings,contempt_Data,contempt_Timings,amusement_Data,amusement_Timings]=Data_Process(wordLevel_alignedTranscript_User,wordLevel_alignedTranscript_User_Line_Count,valence_Lines, valence_Count,arousal_Lines, arousal_Count,power_Lines, power_Count,expectation_Lines, expectation_Count,intensity_Lines, intensity_Count,fear_Lines, fear_Count,anger_Lines, anger_Count,happiness_Lines, happiness_Count,saddness_Lines, saddness_Count,disgust_Lines, disgust_Count,contempt_Lines, contempt_Count,amusement_Lines, amusement_Count)
     % wordLevel_alignedTranscript stores the detail data of each parameter
     % timing_List stores the start and end point of the speaking time
-    if 1==alignedTranscript_User_Line_Count
+    if 1==wordLevel_alignedTranscript_User_Line_Count
         wordLevel_Transcript=cell(1,1);
         wordLevel_Transcript_Timings=zeros(1,2);
         arousal_Data=zeros(1,1);
@@ -61,12 +61,12 @@ function [wordLevel_Transcript,wordLevel_Transcript_Timings,arousal_Data,arousal
         amusement_Data=zeros(1,1);
         amusement_Timings=zeros(1,1);
     else 
-        wordLevel_Transcript=cell(alignedTranscript_User_Line_Count-1,1);
-        wordLevel_Transcript_Timings=zeros(alignedTranscript_User_Line_Count-1,2);
+        wordLevel_Transcript=cell(wordLevel_alignedTranscript_User_Line_Count-1,1);
+        wordLevel_Transcript_Timings=zeros(wordLevel_alignedTranscript_User_Line_Count-1,2);
         % process the transcript into three columns
         % first two columns represent the start and end time of speaking
         % third column represent the text
-        for i=1:alignedTranscript_User_Line_Count-1
+        for i=1:wordLevel_alignedTranscript_User_Line_Count-1
             a = strsplit(wordLevel_alignedTranscript_User{i},' ');
             if (('-'~=a{1}(1))&&('.'~=a{1}(1)))
                 wordLevel_Transcript_Timings(i,1)=(str2double(a{1}))/1000;
