@@ -58,10 +58,9 @@
 %
 % contempt_Lines, 
 % contempt_Count
-function [valence_Lines, valence_Count,arousal_Lines, arousal_Count,power_Lines, power_Count,expectation_Lines, expectation_Count,intensity_Lines, intensity_Count,fear_Lines, fear_Count,anger_Lines, anger_Count,happiness_Lines, happiness_Count,saddness_Lines, saddness_Count,disgust_Lines, disgust_Count,contempt_Lines, contempt_Count,amusement_Lines, amusement_Count]=File_Selection (fileName, pathName)    
+function [valence_Lines, arousal_Lines, power_Lines, expectation_Lines, intensity_Lines, fear_Lines, anger_Lines, happiness_Lines, saddness_Lines, disgust_Lines, contempt_Lines, amusement_Lines]=File_Selection (fileName, pathName)    
     %initialization
     valence_num=0;
-    valence_Count=1;
     valence_Lines=cell(50000,2);
     
     arousal_num=0;

@@ -30,12 +30,11 @@
 % contempt_Count
 % amusement_Lines,
 % amusement_Count
-function [wordLevel_Transcript,wordLevel_Transcript_Timings,arousal_Data,arousal_Timings,valence_Data, valence_Timings,power_Data, power_Timings,expectation_Data,expectation_Timings,intensity_Data,intensity_Timings,fear_Data,fear_Timings,anger_Data,anger_Timings,happiness_Data,happiness_Timings,saddness_Data,saddness_Timings,disgust_Data,disgust_Timings,contempt_Data,contempt_Timings,amusement_Data,amusement_Timings]=Data_Process(wordLevel_alignedTranscript_User,wordLevel_alignedTranscript_User_Line_Count,valence_Lines, valence_Count,arousal_Lines, arousal_Count,power_Lines, power_Count,expectation_Lines, expectation_Count,intensity_Lines, intensity_Count,fear_Lines, fear_Count,anger_Lines, anger_Count,happiness_Lines, happiness_Count,saddness_Lines, saddness_Count,disgust_Lines, disgust_Count,contempt_Lines, contempt_Count,amusement_Lines, amusement_Count)
+
+function [valence_Data, valence_Timings,arousal_Data,arousal_Timings, power_Data, power_Timings,expectation_Data,expectation_Timings,intensity_Data,intensity_Timings,fear_Data,fear_Timings,anger_Data,anger_Timings,happiness_Data,happiness_Timings,saddness_Data,saddness_Timings,disgust_Data,disgust_Timings,contempt_Data,contempt_Timings,amusement_Data,amusement_Timings]=Data_Process(valence_Lines, valence_Count,arousal_Lines, arousal_Count,power_Lines, power_Count,expectation_Lines, expectation_Count,intensity_Lines, intensity_Count,fear_Lines, fear_Count,anger_Lines, anger_Count,happiness_Lines, happiness_Count,saddness_Lines, saddness_Count,disgust_Lines, disgust_Count,contempt_Lines, contempt_Count,amusement_Lines, amusement_Count)
     % wordLevel_alignedTranscript stores the detail data of each parameter
     % timing_List stores the start and end point of the speaking time
     if 1==wordLevel_alignedTranscript_User_Line_Count
-        wordLevel_Transcript=cell(1,1);
-        wordLevel_Transcript_Timings=zeros(1,2);
         arousal_Data=zeros(1,1);
         arousal_Timings=zeros(1,1);
         valence_Data=zeros(1,1);
