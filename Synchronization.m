@@ -47,12 +47,12 @@ function [A]=Synchronization(lines_Num, valence_Lines, arousal_Lines, power_Line
         data_Cluster{i,1}=double(i)*0.02;
     end
     
-    A = convert2Matrix(data_Cluster);
+    A = convert2Matrix(lines_Num,data_Cluster);
 end
 
-function [A]=convert2Matrix(data_Cluster)
-    A=zeros(30000,13);
-    for i=1:size(data_Cluster,1)
+function [A]=convert2Matrix(lines_Num,data_Cluster)
+    A=zeros(lines_Num,13);
+    for i=1:lines_Num
         for j=1:size(data_Cluster,2)
             A(i,j)=str2double(num2str(data_Cluster{i,j}));
         end
