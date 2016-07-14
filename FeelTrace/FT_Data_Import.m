@@ -30,8 +30,8 @@ function FT_Data_Import (maindir)
 %         fprintf('\n');
 
     % exported file absolute path
-    export_FilePath = '/Users/village/Desktop/Data_MasterThesis/Obadiah/FeelTrace/';
-   
+    %export_FilePath = '/Users/village/Desktop/Data_MasterThesis/Obadiah/FeelTrace/';
+    export_FilePath=uigetdir( 'choose the export folder' );
     % subfolder path
     subdir  = dir( maindir );  
     % process each subfolder
@@ -57,6 +57,7 @@ function FT_Data_Import (maindir)
         % fullfile the absolute path of txt file
         pathName = fullfile( maindir, subdir( i ).name);
         % fullfile the absolute path export folder
+        export_FilePath = strcat(export_FilePath,'/');
         export_FileName = strcat(export_FilePath,subdir( i ).name);
                 
         % process each txt file
