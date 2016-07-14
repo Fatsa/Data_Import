@@ -1,6 +1,6 @@
-  %this function used to match the file to the correct process
-%FileName only contains the name of the file
-%PathName only have the absolute path of the file
+% this function used to match the file to the correct process
+% FileName only contains the name of the file
+% PathName only have the absolute path of the file
 % 
 % Features included in the calculation
 % DV = Valence
@@ -58,60 +58,51 @@
 %
 % contempt_Lines, 
 % contempt_Count
-function [valence_Lines, valence_Count,arousal_Lines, arousal_Count,power_Lines, power_Count,expectation_Lines, expectation_Count,intensity_Lines, intensity_Count,fear_Lines, fear_Count,anger_Lines, anger_Count,happiness_Lines, happiness_Count,saddness_Lines, saddness_Count,disgust_Lines, disgust_Count,contempt_Lines, contempt_Count,amusement_Lines, amusement_Count]=File_Selection (fileName, pathName)    
+function [lines_Num, valence_Lines, arousal_Lines, power_Lines, expectation_Lines, intensity_Lines, fear_Lines, anger_Lines, happiness_Lines, saddness_Lines, disgust_Lines, contempt_Lines, amusement_Lines]=FT_File_Selection (fileName, pathName)    
     %initialization
+    lines_Num =0; 
+    
     valence_num=0;
-    valence_Count=1;
-    valence_Lines=cell(50000,2);
+    valence_Lines=cell(30000,2);
     
     arousal_num=0;
-    arousal_Count=1;
-    arousal_Lines=cell(50000,2);
+    arousal_Lines=cell(30000,2);
     
     power_num=0;
-    power_Count=1;
-    power_Lines=cell(50000,2);
+    power_Lines=cell(30000,2);
 
     expectation_num=0;
-    expectation_Count=1;
-    expectation_Lines=cell(50000,2);
+    expectation_Lines=cell(30000,2);
     
-    intensity_num=0;
-    intensity_Count=1;  
-    intensity_Lines=cell(50000,2);
+    intensity_num=0;  
+    intensity_Lines=cell(30000,2);
         
     fear_num=0;
-    fear_Count=1;
-    fear_Lines=cell(50000,2);
+    fear_Lines=cell(30000,2);
     
     anger_num=0;
-    anger_Count=1;
-    anger_Lines=cell(50000,2);
+    anger_Lines=cell(30000,2);
         
     happiness_num=0;
-    happiness_Count=1;
-    happiness_Lines=cell(50000,2);
+    happiness_Lines=cell(30000,2);
     
     saddness_num=0;
-    saddness_Count=1;
-    saddness_Lines=cell(50000,2);
+    saddness_Lines=cell(30000,2);
         
     disgust_num=0;
-    disgust_Count=1; 
-    disgust_Lines=cell(50000,2);
+    disgust_Lines=cell(30000,2);
 
     contempt_num=0;
-    contempt_Count=1;
-    contempt_Lines=cell(50000,2);
+    contempt_Lines=cell(30000,2);
         
     amusement_num=0;
-    amusement_Count=1;
-    amusement_Lines=cell(50000,2);
+    amusement_Lines=cell(30000,2);
     
     for n = 1: length(fileName)
         % DV means the Valence
         if (0==isempty(strfind(fileName{n},'DV')))
-            [valence_Lines, valence_Count,valence_num]=Data_Process(valence_Lines,fileName{n}, pathName,valence_num);
+            [valence_Lines,count,valence_num]=FT_Data_Process(valence_Lines,fileName{n}, pathName,valence_num);
+            [lines_Num]=FT_Maximum(lines_Num,count);
             fprintf('%s has been matched file\n',fileName{n})
         % DA means the Activation/Arousal
         % fileName doesn't contain DAn
@@ -122,51 +113,62 @@ function [valence_Lines, valence_Count,arousal_Lines, arousal_Count,power_Lines,
         % fileName doesn't contain DAInf
         % fileName doesn't contain DAnomSim   
         elseif ((0~=isempty(strfind(fileName{n},'DAn')))&&(0~=isempty(strfind(fileName{n},'DAm')))&&(0~=isempty(strfind(fileName{n},'DAgre')))&&(0~=isempty(strfind(fileName{n},'DAntg')))&&(0~=isempty(strfind(fileName{n},'DASug')))&&(0~=isempty(strfind(fileName{n},'DAInf')))&&(0~=isempty(strfind(fileName{n},'DAnomSim')))&&(0==isempty(strfind(fileName{n},'DA'))))
-            [arousal_Lines, arousal_Count,arousal_num]=Data_Process(arousal_Lines,fileName{n}, pathName,arousal_num);
+            [arousal_Lines, count, arousal_num]=FT_Data_Process(arousal_Lines,fileName{n}, pathName,arousal_num);
+            [lines_Num]=FT_Maximum(lines_Num,count);
             fprintf('%s has been matched file\n',fileName{n})
         % DP means the Power
         elseif (0==isempty(strfind(fileName{n},'DP')))
-            [power_Lines, power_Count, power_num]=Data_Process(power_Lines, fileName{n}, pathName, power_num);
+            [power_Lines, count, power_num]=FT_Data_Process(power_Lines, fileName{n}, pathName, power_num);
+            [lines_Num]=FT_Maximum(lines_Num,count);
             fprintf('%s has been matched file\n',fileName{n})
         % DE means the Anticipation/Expectation
         % fileName doesn't contain DEase
         elseif ((0~=isempty(strfind(fileName{n},'DEase')))&&(0==isempty(strfind(fileName{n},'DE'))))
-            [expectation_Lines, expectation_Count, expectation_num]=Data_Process(power_Lines, fileName{n}, pathName, expectation_num);
+            [expectation_Lines, count, expectation_num]=FT_Data_Process(power_Lines, fileName{n}, pathName, expectation_num);
+            [lines_Num]=FT_Maximum(lines_Num,count);
             fprintf('%s has been matched file\n',fileName{n})
         % DI means the Intensity
         % fileName doesn't contain DIntr
         elseif ((0~=isempty(strfind(fileName{n},'DIntr')))&&(0==isempty(strfind(fileName{n},'DI'))))
-            [intensity_Lines, intensity_Count, intensity_num]=Data_Process(intensity_Lines, fileName{n}, pathName, intensity_num);
+            [intensity_Lines, count, intensity_num]=FT_Data_Process(intensity_Lines, fileName{n}, pathName, intensity_num);
+            [lines_Num]=FT_Maximum(lines_Num,count);
             fprintf('%s has been matched file\n',fileName{n})
         % DFr means the fear
         elseif (0==isempty(strfind(fileName{n},'DFr')))
-            [fear_Lines, fear_Count, fear_num]=Data_Process(fear_Lines, fileName{n}, pathName,fear_num);
+            [fear_Lines, count, fear_num]=FT_Data_Process(fear_Lines, fileName{n}, pathName,fear_num);
+            [lines_Num]=FT_Maximum(lines_Num,count);
             fprintf('%s has been matched file\n',fileName{n})
         % DAn means the anger
         % fileName doesn't contain DAntg
         % fileName doesn't contain DAnomSim
         elseif ((0~=isempty(strfind(fileName{n},'DAntg')))&&(0~=isempty(strfind(fileName{n},'DAnomSim')))&&(0==isempty(strfind(fileName{n},'DAn'))))
-            [anger_Lines, anger_Count, anger_num]=Data_Process(anger_Lines, fileName{n}, pathName, anger_num);
+            [anger_Lines, count, anger_num]=FT_Data_Process(anger_Lines, fileName{n}, pathName, anger_num);
+            [lines_Num]=FT_Maximum(lines_Num,count);
             fprintf('%s has been matched file\n',fileName{n})
         % DHp means happiness
         elseif (0==isempty(strfind(fileName{n},'DHp')))
-            [happiness_Lines, happiness_Count, happiness_num]=Data_Process(anger_Lines, fileName{n}, pathName, happiness_num);
+            [happiness_Lines, count, happiness_num]=FT_Data_Process(anger_Lines, fileName{n}, pathName, happiness_num);
+            [lines_Num]=FT_Maximum(lines_Num,count);
             fprintf('%s has been matched file\n',fileName{n})
         % DSd means saddness
         elseif (0==isempty(strfind(fileName{n},'DSd')))
-            [saddness_Lines, saddness_Count, saddness_num]=Data_Process(anger_Lines, fileName{n}, pathName, saddness_num);
+            [saddness_Lines, count, saddness_num]=FT_Data_Process(anger_Lines, fileName{n}, pathName, saddness_num);
+            [lines_Num]=FT_Maximum(lines_Num,count);
             fprintf('%s has been matched file\n',fileName{n})
         % DDg means digust
         elseif (0==isempty(strfind(fileName{n},'DDg')))
-            [disgust_Lines, disgust_Count, disgust_num]=Data_Process(disgust_Lines, fileName{n}, pathName, disgust_num);
+            [disgust_Lines, count, disgust_num]=FT_Data_Process(disgust_Lines, fileName{n}, pathName, disgust_num);
+            [lines_Num]=FT_Maximum(lines_Num,count);
             fprintf('%s has been matched file\n',fileName{n})
         % DCt means contempt
         elseif (0==isempty(strfind(fileName{n},'DCt')))
-            [contempt_Lines, contempt_Count, contempt_num]=Data_Process(contempt_Lines, fileName{n}, pathName, contempt_num);
+            [contempt_Lines, count, contempt_num]=FT_Data_Process(contempt_Lines, fileName{n}, pathName, contempt_num);
+           [lines_Num]=FT_Maximum(lines_Num,count);
             fprintf('%s has been matched file\n',fileName{n})
         % DAm means amusement
         elseif (0==isempty(strfind(fileName{n},'DAm')))
-            [amusement_Lines, amusement_Count,amusement_num]=Data_Process(amusement_Lines, fileName{n}, pathName, amusement_num);
+            [amusement_Lines, count, amusement_num]=FT_Data_Process(amusement_Lines, fileName{n}, pathName, amusement_num);
+            [lines_Num]=FT_Maximum(lines_Num,count);
             fprintf('%s has been matched file\n',fileName{n})
         else
             fprintf('%s is No matched file\n',fileName{n});
@@ -174,7 +176,7 @@ function [valence_Lines, valence_Count,arousal_Lines, arousal_Count,power_Lines,
     end 
 end
 
-function [lines, count, num]=Data_Process(lines,fileName, pathName,num)
+function [lines, count, num]=FT_Data_Process(lines,fileName, pathName,num)
     % count represent the count index of the line
     count=1;
     % combine the file path and the file name
@@ -219,7 +221,6 @@ function [lines, count, num]=Data_Process(lines,fileName, pathName,num)
                 else
                     lines{count,2}=(lines{count,2}*num+str2double(b{2}))/(num+1);
                 end
-                
                 count=count+1;
             end
             num=num+1;
@@ -227,4 +228,14 @@ function [lines, count, num]=Data_Process(lines,fileName, pathName,num)
     end
     % close the file stream
     fclose(ioStream);
+end
+
+function [lines_Num]=FT_Maximum(lines_Num,count)
+    if 0==lines_Num
+        lines_Num = count;
+    else
+        if lines_Num<count
+            lines_Num=count;
+        end
+    end
 end
