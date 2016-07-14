@@ -8,7 +8,7 @@
 % % delimiter = seperating sign, normally:',' (default)
 
 % export_FileName = the export file path and the file name
-function Export_Data_FeelTrace(export_FileName, data_FeelTrace)
+function FT_Export_Data(export_FileName, data_FeelTrace)
     csvwrite(export_FileName, data_FeelTrace);
     
 % %     % Initialization

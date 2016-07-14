@@ -22,7 +22,7 @@
 % 5 - expectation, 6 - intensity, 7 - fear, 8 - anger, 9 - happiness
 % 10 - saddness, 11 - disgust, 12 - contempt, 13 amusement
 
-function [A]=Synchronization(lines_Num, valence_Lines, arousal_Lines, power_Lines, expectation_Lines, intensity_Lines, fear_Lines, anger_Lines, happiness_Lines, saddness_Lines, disgust_Lines, contempt_Lines, amusement_Lines)
+function [A]=FT_Synchronization(lines_Num, valence_Lines, arousal_Lines, power_Lines, expectation_Lines, intensity_Lines, fear_Lines, anger_Lines, happiness_Lines, saddness_Lines, disgust_Lines, contempt_Lines, amusement_Lines)
     % Initialization
     data_Cluster=cell(30000,13);
 
@@ -47,10 +47,10 @@ function [A]=Synchronization(lines_Num, valence_Lines, arousal_Lines, power_Line
         data_Cluster{i,1}=double(i)*0.02;
     end
     
-    A = convert2Matrix(lines_Num,data_Cluster);
+    A = FT_convert2Matrix(lines_Num,data_Cluster);
 end
 
-function [A]=convert2Matrix(lines_Num,data_Cluster)
+function [A]=FT_convert2Matrix(lines_Num,data_Cluster)
     A=zeros(lines_Num,13);
     for i=1:lines_Num
         for j=1:size(data_Cluster,2)

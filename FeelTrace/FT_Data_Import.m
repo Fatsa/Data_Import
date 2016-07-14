@@ -17,7 +17,7 @@
 % intensity_Timings
 % anger_Data,
 % anger_Timings
-function Data_Import (maindir)
+function FT_Data_Import (maindir)
 %     file_Structure = dir(pathName); 
 %     % the first 3 file are MAC os file isntead of data file
 %     for i=3:size(file_Structure)     
@@ -62,15 +62,15 @@ function Data_Import (maindir)
         % process each txt file
         if  ~iscell(fileName)
             fileName1 = cellstr(fileName);
-            [lines_Num, valence_Lines, arousal_Lines, power_Lines, expectation_Lines, intensity_Lines, fear_Lines, anger_Lines, happiness_Lines, saddness_Lines, disgust_Lines, contempt_Lines, amusement_Lines]=File_Selection(fileName1,pathName);
+            [lines_Num, valence_Lines, arousal_Lines, power_Lines, expectation_Lines, intensity_Lines, fear_Lines, anger_Lines, happiness_Lines, saddness_Lines, disgust_Lines, contempt_Lines, amusement_Lines]=FT_File_Selection(fileName1,pathName);
         else
-            [lines_Num, valence_Lines, arousal_Lines, power_Lines, expectation_Lines, intensity_Lines, fear_Lines, anger_Lines, happiness_Lines, saddness_Lines, disgust_Lines, contempt_Lines, amusement_Lines]=File_Selection(fileName,pathName);
+            [lines_Num, valence_Lines, arousal_Lines, power_Lines, expectation_Lines, intensity_Lines, fear_Lines, anger_Lines, happiness_Lines, saddness_Lines, disgust_Lines, contempt_Lines, amusement_Lines]=FT_File_Selection(fileName,pathName);
         end
 
         % synchronize the data of each features and merge them in one data
         % strucutre
-        [data_FeelTrace]=Synchronization(lines_Num, valence_Lines, arousal_Lines, power_Lines, expectation_Lines, intensity_Lines, fear_Lines, anger_Lines, happiness_Lines, saddness_Lines, disgust_Lines, contempt_Lines, amusement_Lines);
+        [data_FeelTrace]=FT_Synchronization(lines_Num, valence_Lines, arousal_Lines, power_Lines, expectation_Lines, intensity_Lines, fear_Lines, anger_Lines, happiness_Lines, saddness_Lines, disgust_Lines, contempt_Lines, amusement_Lines);
 
-        Export_Data_FeelTrace(export_FileName,data_FeelTrace);
+        FT_Export_Data(export_FileName,data_FeelTrace);
     end
 end
