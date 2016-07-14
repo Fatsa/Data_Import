@@ -1,0 +1,25 @@
+
+function [data_FaceReader]=FR_Synchronization(FR_Lines_temp, lines_Num)
+    % Initialization
+    A=cell(lines_Num,9);
+    
+    for i=1:9
+        A(:,i)=FR_Lines_temp(:,i);
+    end 
+
+    % setting the time range
+    for i=1:lines_Num
+        data_Cluster{i,1}=double(i)*0.02;
+    end
+    
+    data_FaceReader = FT_convert2Matrix(lines_Num,A);
+end
+
+function [A]=FT_convert2Matrix(lines_Num,A)
+    A=zeros(lines_Num,9);
+    for i=1:lines_Num
+        for j=1:size(data_FaceReader,2)
+            A(i,j)=str2double(num2str(data_FaceReader{i,j}));
+        end
+    end
+end

@@ -18,19 +18,7 @@
 % anger_Data,
 % anger_Timings
 function FT_Data_Import (maindir)
-%     file_Structure = dir(pathName); 
-%     % the first 3 file are MAC os file isntead of data file
-%     for i=3:size(file_Structure)     
-%         fileName=file_Structure(i).name;
-%         % check the file exitst
-%         if pathName == 0
-%            return;
-%         end
-%         fprintf(pathName);
-%         fprintf('\n');
-
     % exported file absolute path
-    %export_FilePath = '/Users/village/Desktop/Data_MasterThesis/Obadiah/FeelTrace/';
     export_FilePath=uigetdir( 'choose the export folder' );
     % subfolder path
     subdir  = dir( maindir );  
