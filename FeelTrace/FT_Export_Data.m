@@ -1,13 +1,10 @@
-% % Writes cell array of FeelTrace data content into a *.csv file.
-% % 
-% % Export_Data_FeelTrace(data_FeelTrace)
-% % data_FeelTrace = Values of FeelTrace data
+% % Writes matrix of FeelTrace data content into a *.csv file.
 % %
 % % in the code 
-% % filename      = Name of the file to save. [ i.e. 'text.csv' ]
-% % delimiter = seperating sign, normally:',' (default)
-
+% % export_FileName      = Name of the file to save. [ i.e. 'text.csv' ]
+% % data_FeelTrace = Values of FeelTrace data
 % export_FileName = the export file path and the file name
+
 function FT_Export_Data(export_FileName, data_FeelTrace)
     csvwrite(export_FileName, data_FeelTrace);
     
