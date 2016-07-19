@@ -124,7 +124,7 @@ function [lines_Num, valence_Lines, arousal_Lines, power_Lines, expectation_Line
         % DE means the Anticipation/Expectation
         % fileName doesn't contain DEase
         elseif ((0~=isempty(strfind(fileName{n},'DEase')))&&(0==isempty(strfind(fileName{n},'DE'))))
-            [expectation_Lines, count, expectation_num]=FT_Data_Process(power_Lines, fileName{n}, pathName, expectation_num);
+            [expectation_Lines, count, expectation_num]=FT_Data_Process(expectation_Lines, fileName{n}, pathName, expectation_num);
             [lines_Num]=FT_Maximum(lines_Num,count);
             fprintf('%s has been matched file\n',fileName{n})
         % DI means the Intensity
@@ -147,12 +147,12 @@ function [lines_Num, valence_Lines, arousal_Lines, power_Lines, expectation_Line
             fprintf('%s has been matched file\n',fileName{n})
         % DHp means happiness
         elseif (0==isempty(strfind(fileName{n},'DHp')))
-            [happiness_Lines, count, happiness_num]=FT_Data_Process(anger_Lines, fileName{n}, pathName, happiness_num);
+            [happiness_Lines, count, happiness_num]=FT_Data_Process(happiness_Lines, fileName{n}, pathName, happiness_num);
             [lines_Num]=FT_Maximum(lines_Num,count);
             fprintf('%s has been matched file\n',fileName{n})
         % DSd means saddness
         elseif (0==isempty(strfind(fileName{n},'DSd')))
-            [saddness_Lines, count, saddness_num]=FT_Data_Process(anger_Lines, fileName{n}, pathName, saddness_num);
+            [saddness_Lines, count, saddness_num]=FT_Data_Process(saddness_Lines, fileName{n}, pathName, saddness_num);
             [lines_Num]=FT_Maximum(lines_Num,count);
             fprintf('%s has been matched file\n',fileName{n})
         % DDg means digust

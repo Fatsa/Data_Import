@@ -59,7 +59,8 @@ function FT_Data_Import (maindir)
         % synchronize the data of each features and merge them in one data
         % strucutre
         [data_FeelTrace]=FT_Synchronization(lines_Num, valence_Lines, arousal_Lines, power_Lines, expectation_Lines, intensity_Lines, fear_Lines, anger_Lines, happiness_Lines, saddness_Lines, disgust_Lines, contempt_Lines, amusement_Lines);
-
+        
+        % export the proessed data into a csv.file
         FT_Export_Data(export_FileName,data_FeelTrace);
     end
 end
