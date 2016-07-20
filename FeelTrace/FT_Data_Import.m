@@ -62,5 +62,9 @@ function FT_Data_Import (maindir)
         
         % export the proessed data into a csv.file
         FT_Export_Data(export_FileName,data_FeelTrace);
+        
+        export_FileName = strcat(export_FileName,'_overall');
+        [ov_Data_FeelTrace]=FT_Data_Merge(data_FeelTrace);
+        FT_Export_Data(export_FileName,ov_Data_FeelTrace);
     end
 end
