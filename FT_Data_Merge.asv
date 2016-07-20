@@ -1,0 +1,8 @@
+% merge different feature values into one cloumn
+
+% export_FilePath representes the file export path
+% data_FeelTrace represents the overall data set
+% ov_Data_FeelTrace
+
+function [ov_Data_FeelTrace]=FT_Data_Merge(export_FilePath, data_FeelTrace)
+end
