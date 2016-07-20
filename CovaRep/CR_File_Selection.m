@@ -52,7 +52,7 @@ function [file_Num, CR_Lines, count] = CR_Data_Process(CR_Lines,input_Values,fil
             % the part overlapped
             for i = 1:length
                 for j = 1:74
-                    m = str2double(CR_Lines(i,j));
+                    m = CR_Lines(i,j);
                     n = input_Values(i,j);
                     CR_Lines(i,j) = (m*file_Num+n)/(file_Num+1);
                 end

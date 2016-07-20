@@ -22,14 +22,19 @@ function CR_Data_Import (maindir)
     % process each txt file
     if  ~iscell(fileName)
         fileName1 = cellstr(fileName);
-        [FR_Lines_temp, lines_Num]=CR_File_Selection(fileName1,pathName);
+        [CR_Lines_Temp, lines_Num]=CR_File_Selection(fileName1,pathName);
     else
-        [FR_Lines_temp, lines_Num]=CR_File_Selection(fileName,pathName);
+        [CR_Lines_Temp, lines_Num]=CR_File_Selection(fileName,pathName);
     end
 
     % structurize the final data 
-    %[data_FaceReader]=FR_Synchronization(FR_Lines_temp, lines_Num);
+    [data_CovaRep]=CR_Synchronization(CR_Lines_Temp, lines_Num);
 
     % export the proessed data into a csv.file
-    %FR_Export_Data(export_FileName,data_FaceReader);
+    CR_Export_Data(export_FileName,data_CovaRep);
+    
+    % export the overall data into a csv.file
+    export_FileName = strcat(export_FilePath,'/Overall');
+    [ov_Data_CovaRep] = CR_Merge(data_CovaRep);
+    CR_Export_Data(export_FileName,ov_Data_CovaRep);
 end
