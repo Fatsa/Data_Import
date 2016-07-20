@@ -1,0 +1,5 @@
+% merage the detail feature data into overall data set
+function [ov_Data_CovaRep] = CR_Merge(data_CovaRep)
+    ov_Data_CovaRep = zeros(1,74);
+    [i,j]=
+end
