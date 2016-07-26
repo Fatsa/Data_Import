@@ -66,37 +66,37 @@ function [lines_Num, valence_Lines, arousal_Lines, power_Lines, expectation_Line
     valence_Lines=cell(50000,2);
     
     arousal_num=0;
-    arousal_Lines=cell(50000,2);
+    arousal_Lines=cell(40000,2);
     
     power_num=0;
-    power_Lines=cell(50000,2);
+    power_Lines=cell(40000,2);
 
     expectation_num=0;
-    expectation_Lines=cell(50000,2);
+    expectation_Lines=cell(40000,2);
     
     intensity_num=0;  
-    intensity_Lines=cell(50000,2);
+    intensity_Lines=cell(40000,2);
         
     fear_num=0;
-    fear_Lines=cell(50000,2);
+    fear_Lines=cell(40000,2);
     
     anger_num=0;
-    anger_Lines=cell(50000,2);
+    anger_Lines=cell(40000,2);
         
     happiness_num=0;
-    happiness_Lines=cell(50000,2);
+    happiness_Lines=cell(40000,2);
     
     saddness_num=0;
-    saddness_Lines=cell(50000,2);
+    saddness_Lines=cell(40000,2);
         
     disgust_num=0;
-    disgust_Lines=cell(50000,2);
+    disgust_Lines=cell(40000,2);
 
     contempt_num=0;
-    contempt_Lines=cell(50000,2);
+    contempt_Lines=cell(40000,2);
         
     amusement_num=0;
-    amusement_Lines=cell(50000,2);
+    amusement_Lines=cell(40000,2);
     
     for n = 1: length(fileName)
         fprintf('%s start to process file\n',fileName{n})

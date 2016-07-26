@@ -24,7 +24,7 @@
 
 function [A]=FT_Synchronization(lines_Num, valence_Lines, arousal_Lines, power_Lines, expectation_Lines, intensity_Lines, fear_Lines, anger_Lines, happiness_Lines, saddness_Lines, disgust_Lines, contempt_Lines, amusement_Lines)
     % Initialization
-    data_Cluster=cell(30000,13);
+    data_Cluster=cell(50000,13);
 
     % among the cell's operation
     % data_Cluster {} is usually used to represent a single element
