@@ -217,9 +217,6 @@ function [lines, count, num]=FT_Data_Process(lines,fileName, pathName,num)
                     continue;
                 else
                     if (0 == isempty(b(1)))
-                        if (1+lines_Size(1) == count)
-                            fprintf('Boom!Shakalaka! 2.0\n');
-                        end
                         % extract the time vlaue
                         if(1 == isempty(lines{count,1}))
                            

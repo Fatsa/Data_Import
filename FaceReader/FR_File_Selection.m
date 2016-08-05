@@ -23,7 +23,7 @@ function [FR_Lines, lines_Num]=FR_File_Selection (fileName, pathName)
     % file_Num represent the number of the inputed file
     file_Num = 0;
     % define the data_Cluster for FaceReader transcript
-    FR_Lines=cell(30000,10);
+    FR_Lines=cell(50000,10);
     for n = 1: length(fileName)
         [file_Num, FR_Lines, count] = FR_Data_Process(fileName{n}, pathName, FR_Lines, file_Num);
         [lines_Num] = FR_Maximum(lines_Num,count);
@@ -153,22 +153,25 @@ function [file_Num, FR_Lines, count]=FR_Data_Process(fileName, pathName, FR_Line
                         % assign the feature value
                         % the element of FR_Lines is double not cell after
                         % the case of file_Num=0
-                        if (0 == strcmp('FIT_FAILED',b{j})&&(0 == strcmp('FIND_FAILED', b{j})))
-                            if 0 == isempty(FR_Lines{count,j})
-                                FR_Lines{count,j}=(FR_Lines{count,j}*file_Num+str2double(b{j}))/(file_Num+1);
-                            else 
-                                FR_Lines{count,j}=str2double(b{j});                               
+                        if 0 == isempty(b{j})
+                            if (0 == strcmp('FIT_FAILED',b{j})&&(0 == strcmp('FIND_FAILED', b{j})))
+                                if 0 == isempty(FR_Lines{count,j})
+                                    FR_Lines{count,j}=(FR_Lines{count,j}*file_Num+str2double(b{j}))/(file_Num+1);
+                                else 
+                                    FR_Lines{count,j}=str2double(b{j});                               
+                                end
+                            else
+                                % FR_Lines{cout,j} remain the same
+                                % use the previous value to represent the
+                                % missing element
+                                if 0 == isempty(FR_Lines{count,j})
+                                    FR_Lines{count,j}=(FR_Lines{count,j}*file_Num+0)/(file_Num+1);
+                                else 
+                                    FR_Lines{count,j}=0;                               
+                                end
                             end
                         else
-                            % FR_Lines{cout,j} remain the same
-                            % use the previous value to represent the
-                            % missing element
-                            if 0 == isempty(FR_Lines{count,j})
-                                FR_Lines{count,j}=(FR_Lines{count,j}*file_Num+0)/(file_Num+1);
-                            else 
-                                FR_Lines{count,j}=0;                               
-                            end
-                            fprintf('there is a FAILED data (FIT_FAILED/FIND_FAILED)\n');
+                            fprintf('input data is empty\n')
                         end
                     end
                 end

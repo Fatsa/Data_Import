@@ -32,4 +32,12 @@ function FR_Data_Import (maindir)
 
     % export the proessed data into a csv.file
     FR_Export_Data(export_FileName,data_FaceReader);
+    
+    % change the export name
+    export_FileName = strcat(export_FilePath,'/Merge');
+    % merge the final data
+    [Merge_FaceReader] = FR_Data_Merge(data_FaceReader);
+   
+    % export the proessed data into a csv.file
+    FR_Export_Data(export_FileName,Merge_FaceReader);
 end
