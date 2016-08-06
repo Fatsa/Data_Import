@@ -215,44 +215,56 @@ function [FT_sensitivity] = FT_Sensitivity_Calculation (arousal_Sensitivity, ...
         happiness_Sensitivity, saddness_Sensitivity, disgust_Sensitivity, ...
         contempt_Sensitivity, amusement_Sensitivity)
     % define the sensitivity matrix
-    FT_sensitivity = zeros(12,2);
+    FT_sensitivity = zeros(12,3);
     
     % arousal
     FT_sensitivity(1,1) = FT_Sensitivity_AV (arousal_Sensitivity);
     FT_sensitivity(1,2) = FT_Sensitivity_SD (FT_sensitivity(1,1),arousal_Sensitivity);
+    FT_sensitivity(1,3) = FT_Sensitivity_SK (FT_sensitivity(1,1),arousal_Sensitivity);
     % valence
     FT_sensitivity(2,1) = FT_Sensitivity_AV (valence_Sensitivity);
-    FT_sensitivity(2,2) = FT_Sensitivity_SD (FT_sensitivity(2,1),valence_Sensitivity);   
+    FT_sensitivity(2,2) = FT_Sensitivity_SD (FT_sensitivity(2,1),valence_Sensitivity); 
+    FT_sensitivity(2,3) = FT_Sensitivity_SK (FT_sensitivity(2,1),valence_Sensitivity);
     % power
     FT_sensitivity(3,1) = FT_Sensitivity_AV (power_Sensitivity);
     FT_sensitivity(3,2) = FT_Sensitivity_SD (FT_sensitivity(3,1),power_Sensitivity);    
+    FT_sensitivity(3,3) = FT_Sensitivity_SK (FT_sensitivity(3,1),power_Sensitivity);  
     % expectation
     FT_sensitivity(4,1) = FT_Sensitivity_AV (expectation_Sensitivity);
     FT_sensitivity(4,2) = FT_Sensitivity_SD (FT_sensitivity(4,1),expectation_Sensitivity);    
+    FT_sensitivity(4,3) = FT_Sensitivity_SK (FT_sensitivity(4,1),expectation_Sensitivity);      
     % intensity
     FT_sensitivity(5,1) = FT_Sensitivity_AV (intensity_Sensitivity);
     FT_sensitivity(5,2) = FT_Sensitivity_SD (FT_sensitivity(5,1),intensity_Sensitivity);    
+    FT_sensitivity(5,3) = FT_Sensitivity_SK (FT_sensitivity(5,1),intensity_Sensitivity);    
     % fear
     FT_sensitivity(6,1) = FT_Sensitivity_AV (fear_Sensitivity);
-    FT_sensitivity(6,2) = FT_Sensitivity_SD (FT_sensitivity(6,1),fear_Sensitivity);    
+    FT_sensitivity(6,2) = FT_Sensitivity_SD (FT_sensitivity(6,1),fear_Sensitivity);     
+    FT_sensitivity(6,3) = FT_Sensitivity_SK (FT_sensitivity(6,1),fear_Sensitivity);   
     % anger
     FT_sensitivity(7,1) = FT_Sensitivity_AV (anger_Sensitivity);
-    FT_sensitivity(7,2) = FT_Sensitivity_SD (FT_sensitivity(7,1),anger_Sensitivity);    
+    FT_sensitivity(7,2) = FT_Sensitivity_SD (FT_sensitivity(7,1),anger_Sensitivity);      
+    FT_sensitivity(7,3) = FT_Sensitivity_SK (FT_sensitivity(7,1),anger_Sensitivity);   
     % happiness
     FT_sensitivity(8,1) = FT_Sensitivity_AV (happiness_Sensitivity);
-    FT_sensitivity(8,2) = FT_Sensitivity_SD (FT_sensitivity(8,1),happiness_Sensitivity);    
+    FT_sensitivity(8,2) = FT_Sensitivity_SD (FT_sensitivity(8,1),happiness_Sensitivity);       
+    FT_sensitivity(8,3) = FT_Sensitivity_SK (FT_sensitivity(8,1),happiness_Sensitivity);  
     % saddness
     FT_sensitivity(9,1) = FT_Sensitivity_AV (saddness_Sensitivity);
-    FT_sensitivity(9,2) = FT_Sensitivity_SD (FT_sensitivity(9,1),saddness_Sensitivity);    
+    FT_sensitivity(9,2) = FT_Sensitivity_SD (FT_sensitivity(9,1),saddness_Sensitivity);  
+    FT_sensitivity(9,3) = FT_Sensitivity_SK (FT_sensitivity(9,1),saddness_Sensitivity);    
    % disgust
     FT_sensitivity(10,1) = FT_Sensitivity_AV (disgust_Sensitivity);
     FT_sensitivity(10,2) = FT_Sensitivity_SD (FT_sensitivity(10,1),disgust_Sensitivity);  
+    FT_sensitivity(10,3) = FT_Sensitivity_SK (FT_sensitivity(10,1),disgust_Sensitivity);  
    % contempt
     FT_sensitivity(11,1) = FT_Sensitivity_AV (contempt_Sensitivity);
-    FT_sensitivity(11,2) = FT_Sensitivity_SD (FT_sensitivity(11,1),contempt_Sensitivity);  
+    FT_sensitivity(11,2) = FT_Sensitivity_SD (FT_sensitivity(11,1),contempt_Sensitivity);   
+    FT_sensitivity(11,3) = FT_Sensitivity_SK (FT_sensitivity(11,1),contempt_Sensitivity); 
    % amusement
     FT_sensitivity(12,1) = FT_Sensitivity_AV (amusement_Sensitivity);
-    FT_sensitivity(12,2) = FT_Sensitivity_SD (FT_sensitivity(12,1),amusement_Sensitivity);  
+    FT_sensitivity(12,2) = FT_Sensitivity_SD (FT_sensitivity(12,1),amusement_Sensitivity);   
+    FT_sensitivity(12,3) = FT_Sensitivity_SK (FT_sensitivity(12,1),amusement_Sensitivity);  
 end
 
 % calculate the average value
@@ -273,4 +285,16 @@ function [SD] = FT_Sensitivity_SD(AV, target_List)
         sum = sum + (AV-target_List(i,1))^2;
     end    
     SD = sqrt(sum/M);
+end
+
+% calculate the Skewness, average value
+function [SK] = FT_Sensitivity_SK(AV, target_List)
+    [M,N] = size(target_List);
+    sum1 = 0;
+    sum2 = 0;
+    for i = 1 :M
+        sum1 = sum1 + (AV-target_List(i,1))^3;
+        sum2 = sum2 + (AV-target_List(i,1))^2;
+    end    
+    SK = (sum1/M)/((sqrt(sum2/(M-1)))^3);
 end

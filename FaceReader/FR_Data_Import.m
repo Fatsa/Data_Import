@@ -18,26 +18,35 @@ function FR_Data_Import (maindir)
     % fullfile the absolute path of txt file
     pathName = fullfile( maindir);
     export_FileName = strcat(export_FilePath,'/Overall');
-    
-    % process each txt file
+ 
+    % function of FR_Sensitivity
     if  ~iscell(fileName)
         fileName1 = cellstr(fileName);
-        [FR_Lines_temp, lines_Num]=FR_File_Selection(fileName1,pathName);
+        [FR_Lines_temp]=FR_Sensitivity (fileName1, pathName, export_FileName);
     else
-        [FR_Lines_temp, lines_Num]=FR_File_Selection(fileName,pathName);
-    end
-
-    % structurize the final data 
-    [data_FaceReader]=FR_Synchronization(FR_Lines_temp, lines_Num);
-
-    % export the proessed data into a csv.file
-    FR_Export_Data(export_FileName,data_FaceReader);
+        [FR_Lines_temp]=FR_Sensitivity (fileName, pathName, export_FileName);
+    end    
     
-    % change the export name
-    export_FileName = strcat(export_FilePath,'/Merge');
-    % merge the final data
-    [Merge_FaceReader] = FR_Data_Merge(data_FaceReader);
-   
-    % export the proessed data into a csv.file
-    FR_Export_Data(export_FileName,Merge_FaceReader);
+%      % function of FR_File_Selection    
+%     % process each txt file
+%     if  ~iscell(fileName)
+%         fileName1 = cellstr(fileName);
+%         [FR_Lines_temp, lines_Num]=FR_File_Selection(fileName1,pathName);
+%     else
+%         [FR_Lines_temp, lines_Num]=FR_File_Selection(fileName,pathName);
+%     end
+% 
+%     % structurize the final data 
+%     [data_FaceReader]=FR_Synchronization(FR_Lines_temp, lines_Num);
+% 
+%     % export the proessed data into a csv.file
+%     FR_Export_Data(export_FileName,data_FaceReader);
+%     
+%     % change the export name
+%     export_FileName = strcat(export_FilePath,'/Merge');
+%     % merge the final data
+%     [Merge_FaceReader] = FR_Data_Merge(data_FaceReader);
+%    
+%     % export the proessed data into a csv.file
+%     FR_Export_Data(export_FileName,Merge_FaceReader);
 end
