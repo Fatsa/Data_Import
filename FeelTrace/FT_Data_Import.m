@@ -51,9 +51,17 @@ function FT_Data_Import (maindir)
         % process each txt file
         if  ~iscell(fileName)
             fileName1 = cellstr(fileName);
-            [lines_Num, valence_Lines, arousal_Lines, power_Lines, expectation_Lines, intensity_Lines, fear_Lines, anger_Lines, happiness_Lines, saddness_Lines, disgust_Lines, contempt_Lines, amusement_Lines]=FT_File_Selection(fileName1,pathName);
+%              [lines_Num, valence_Lines, arousal_Lines, power_Lines, ... 
+%              expectation_Lines, intensity_Lines, fear_Lines, anger_Lines, ...
+%              happiness_Lines, saddness_Lines, disgust_Lines, contempt_Lines, ... 
+%              amusement_Lines]=FT_File_Selection(fileName1,pathName);
+            [sensitivity]=FT_Sensitivity (fileName1, pathName);
         else
-            [lines_Num, valence_Lines, arousal_Lines, power_Lines, expectation_Lines, intensity_Lines, fear_Lines, anger_Lines, happiness_Lines, saddness_Lines, disgust_Lines, contempt_Lines, amusement_Lines]=FT_File_Selection(fileName,pathName);
+%             [lines_Num, valence_Lines, arousal_Lines, power_Lines, ... 
+%             expectation_Lines, intensity_Lines, fear_Lines, anger_Lines, ... 
+%             happiness_Lines, saddness_Lines, disgust_Lines, contempt_Lines, ... 
+%             amusement_Lines]=FT_File_Selection(fileName,pathName);
+            [sensitivity]=FT_Sensitivity (fileName, pathName);
         end
 
         % synchronize the data of each features and merge them in one data
