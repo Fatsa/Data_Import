@@ -3,5 +3,5 @@
 function Main ()
     maindir = uigetdir('choose the input folder');
     
-    FR_Data_Import(maindir);
+    FT_Data_Import(maindir);
 end

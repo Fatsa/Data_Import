@@ -63,16 +63,18 @@ function FT_Data_Import (maindir)
 %             amusement_Lines]=FT_File_Selection(fileName,pathName);
             [sensitivity]=FT_Sensitivity (fileName, pathName);
         end
-
-        % synchronize the data of each features and merge them in one data
-        % strucutre
-        [data_FeelTrace]=FT_Synchronization(lines_Num, valence_Lines, arousal_Lines, power_Lines, expectation_Lines, intensity_Lines, fear_Lines, anger_Lines, happiness_Lines, saddness_Lines, disgust_Lines, contempt_Lines, amusement_Lines);
         
-        % export the proessed data into a csv.file
-        FT_Export_Data(export_FileName,data_FeelTrace);
+        FT_Sensitivity_Export(export_FileName, sensitivity);
         
-        export_FileName = strcat(export_FileName,'_overall');
-        [ov_Data_FeelTrace]=FT_Data_Merge(data_FeelTrace);
-        FT_Export_Data(export_FileName,ov_Data_FeelTrace);
+%         % synchronize the data of each features and merge them in one data
+%         % strucutre
+%         [data_FeelTrace]=FT_Synchronization(lines_Num, valence_Lines, arousal_Lines, power_Lines, expectation_Lines, intensity_Lines, fear_Lines, anger_Lines, happiness_Lines, saddness_Lines, disgust_Lines, contempt_Lines, amusement_Lines);
+%         
+%         % export the proessed data into a csv.file
+%         FT_Export_Data(export_FileName,data_FeelTrace);
+%         
+%         export_FileName = strcat(export_FileName,'_overall');
+%         [ov_Data_FeelTrace]=FT_Data_Merge(data_FeelTrace);
+%         FT_Export_Data(export_FileName,ov_Data_FeelTrace);
     end
 end
