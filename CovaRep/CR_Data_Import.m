@@ -32,20 +32,24 @@ function CR_Data_Import (maindir)
         % process each txt file
         if  ~iscell(fileName)
             fileName1 = cellstr(fileName);
-            [CR_Lines_Temp, lines_Num]=CR_File_Selection(fileName1,pathName);
+%             [CR_Lines_Temp, lines_Num]=CR_File_Selection(fileName1,pathName);
+            [sensitivity]=CR_Sensitivity (fileName1, pathName);
         else
-            [CR_Lines_Temp, lines_Num]=CR_File_Selection(fileName,pathName);
+%             [CR_Lines_Temp, lines_Num]=CR_File_Selection(fileName,pathName);
+            [sensitivity]=CR_Sensitivity (fileName, pathName);
         end
 
-        % structurize the final data 
-        [data_CovaRep]=CR_Synchronization(CR_Lines_Temp, lines_Num);
-
-        % export the proessed data into a csv.file
-        CR_Export_Data(export_FileName,data_CovaRep);
-
-        % export the overall data into a csv.file
-        export_FileName = strcat(export_FileName,'_Overall');
-        [ov_Data_CovaRep] = CR_Merge(data_CovaRep);
-        CR_Export_Data(export_FileName,ov_Data_CovaRep);
+        CR_Sensitivity_Export(export_FileName, sensitivity);        
+        
+%         % structurize the final data 
+%         [data_CovaRep]=CR_Synchronization(CR_Lines_Temp, lines_Num);
+% 
+%         % export the proessed data into a csv.file
+%         CR_Export_Data(export_FileName,data_CovaRep);
+% 
+%         % export the overall data into a csv.file
+%         export_FileName = strcat(export_FileName,'_Overall');
+%         [ov_Data_CovaRep] = CR_Merge(data_CovaRep);
+%         CR_Export_Data(export_FileName,ov_Data_CovaRep);
     end
 end
