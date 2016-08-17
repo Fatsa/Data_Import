@@ -3,5 +3,5 @@
 function Main ()
     maindir = uigetdir('choose the input folder');
     
-    CR_Data_Import(maindir);
+    LIWC_Data_Import(maindir);
 end
