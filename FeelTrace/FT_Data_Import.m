@@ -22,6 +22,11 @@ function FT_Data_Import (maindir)
     export_FilePath=uigetdir( 'choose the export folder' );
     % subfolder path
     subdir  = dir( maindir );  
+    
+    % recording how many frequencies have been calculated
+    index_List = zeros(12,12);
+    % recording of the frequency data
+    frequency = zeros(12,12);
     % process each subfolder
     for i = 1 : length( subdir )
         % if it is not the path of folder, it will just be skipped
@@ -55,17 +60,17 @@ function FT_Data_Import (maindir)
 %              expectation_Lines, intensity_Lines, fear_Lines, anger_Lines, ...
 %              happiness_Lines, saddness_Lines, disgust_Lines, contempt_Lines, ... 
 %              amusement_Lines]=FT_File_Selection(fileName1,pathName);
-            [sensitivity]=FT_Sensitivity (fileName1, pathName);
+            [temp_Frequency, index_List]=FT_Frequency (fileName1, pathName,index_List);
+            [frequency] = FT_Frequency_FinalMerge (temp_Frequency, frequency, index_List);
         else
 %             [lines_Num, valence_Lines, arousal_Lines, power_Lines, ... 
 %             expectation_Lines, intensity_Lines, fear_Lines, anger_Lines, ... 
 %             happiness_Lines, saddness_Lines, disgust_Lines, contempt_Lines, ... 
 %             amusement_Lines]=FT_File_Selection(fileName,pathName);
-            [sensitivity]=FT_Sensitivity (fileName, pathName);
+            [temp_Frequency, index_List]=FT_Frequency (fileName, pathName,index_List);
+            [frequency] = FT_Frequency_FinalMerge (temp_Frequency, frequency, index_List);
         end
-        
-        FT_Sensitivity_Export(export_FileName, sensitivity);
-        
+            
 %         % synchronize the data of each features and merge them in one data
 %         % strucutre
 %         [data_FeelTrace]=FT_Synchronization(lines_Num, valence_Lines, arousal_Lines, power_Lines, expectation_Lines, intensity_Lines, fear_Lines, anger_Lines, happiness_Lines, saddness_Lines, disgust_Lines, contempt_Lines, amusement_Lines);
@@ -77,4 +82,5 @@ function FT_Data_Import (maindir)
 %         [ov_Data_FeelTrace]=FT_Data_Merge(data_FeelTrace);
 %         FT_Export_Data(export_FileName,ov_Data_FeelTrace);
     end
+    FT_Frequency_Export(export_FileName, frequency);
 end
