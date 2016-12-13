@@ -25,8 +25,6 @@ function LIWC_TxtSegment(data_Cells, fileID, export_FilePath)
                 if 1 == isempty(str2num(data_Cells{n}))
                     if false == isempty(strfind(data_Cells{n},'.'))
                          fprintf(fID,'%s\n',data_Cells{n});
-                    elseif false == isempty(strfind(data_Cells{n},'<'))
-                        fprintf(fID,' ',data_Cells{n});
                     else
                         fprintf(fID,'%s ',data_Cells{n});
                     end
@@ -34,5 +32,5 @@ function LIWC_TxtSegment(data_Cells, fileID, export_FilePath)
             end
         end
     end
-    fclose(fID);
+    
 end
