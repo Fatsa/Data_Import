@@ -6,14 +6,16 @@ function LIWC_Data_Import (maindir)
     subdir = dir (maindir);
     % process each subfolder
     for i = 1: length(subdir)
-        % it is not the path of folder, it will just skipped
-        if (isequal(subdir(i).name,'.')||...
-                isequal(subdir(i).name,'..')||...
-                ~subdir(i).isdir)
-            continue;
-        end
+        
+%         % it is not the path of folder, it will just skipped
+%         if (isequal(subdir(i).name,'.')||...
+%                 isequal(subdir(i).name,'..')||...
+%                 ~subdir(i).isdir)
+%             continue;
+%         end
+
         % collect all the txt files under the subfolder
-        subdirpath = fullfile( maindir, subdir(i).name,'*.csv' );
+        subdirpath = fullfile( maindir, subdir(i).name,'*.txt' );
         % the set of filenames of txt files
         dat = dir( subdirpath );
         
@@ -32,11 +34,19 @@ function LIWC_Data_Import (maindir)
         % process each txt file
         if  ~iscell(fileName)
             fileName1 = cellstr(fileName);
-            LIWC_Sensitivity (fileName1, pathName);
+            % calculate the sensitivity
+            %LIWC_Sensitivity (fileName1, pathName);
+            
+            % process the txt file
+            LIWC_TxtProcess(fileName1, pathName);
         else
-            LIWC_Sensitivity (fileName, pathName);
+            % calculate the sensitivity
+            %LIWC_Sensitivity (fileName, pathName);
+            
+            % process the txt file
+             LIWC_TxtProcess(fileName, pathName);
         end
-
+        
 %        LIWC_Sensitivity_Export(export_FileName, sensitivity);  
     end
 end
