@@ -1,8 +1,21 @@
+% Features included in the calculation
+% Video Time 1
+% Neutral	 2
+% Happy	3
+% Sad	4
+% Angry	5
+% Surprised	6
+% Scared	7
+% Disgusted	8
+% Valence	9
+% Arousal	10
+% Stimulus	
+% Event Marker
 
-function FR_Data_Import (maindir)
-    % exported file absolute path
-    export_FilePath=uigetdir( 'choose the export folder' );
-
+function [FR_Data] = FR_Data_Import (maindir,export_FilePath)
+    % recording of the frequency data
+    frequency = zeros(9,9);
+    
     % collect all the txt files under the subfolder
     subdirpath = fullfile( maindir, '*.txt' );
     % the set of filenames of txt files
@@ -19,13 +32,32 @@ function FR_Data_Import (maindir)
     pathName = fullfile( maindir);
     export_FileName = strcat(export_FilePath,'/Overall');
  
+    
     % function of FR_Sensitivity
     if  ~iscell(fileName)
         fileName1 = cellstr(fileName);
-        [FR_Lines_temp]=FR_Sensitivity (fileName1, pathName, export_FileName);
+%         % sensitivity 
+%        [FR_Lines_temp]=FR_Sensitivity (fileName1, pathName, export_FileName);
+
+%         % frequency
+%         [data_Frequency]=FR_Frequency (fileName1, pathName);
+%         [frequency] = FR_Frequency_Calculation (data_Frequency, frequency);
+         
+        % Universality
+        [FR_Data] = FR_Universality(fileName1, pathName);
     else
-        [FR_Lines_temp]=FR_Sensitivity (fileName, pathName, export_FileName);
+%          % Sensitivity
+%        [FR_Lines_temp]=FR_Sensitivity (fileName, pathName, export_FileName);
+
+%         % frequency
+%         [data_Frequency]=FR_Frequency (fileName, pathName);
+%         [frequency] = FR_Frequency_Calculation (data_Frequency, frequency);
+
+        % Universality 
+        [FR_Data] = FR_Universality(fileName, pathName);
     end    
+%     % export
+%    FR_Frequency_Export(export_FileName, frequency);   
     
 %      % function of FR_File_Selection    
 %     % process each txt file

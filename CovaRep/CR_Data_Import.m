@@ -32,14 +32,17 @@ function CR_Data_Import (maindir)
         % process each txt file
         if  ~iscell(fileName)
             fileName1 = cellstr(fileName);
-%             [CR_Lines_Temp, lines_Num]=CR_File_Selection(fileName1,pathName);
-            [sensitivity]=CR_Sensitivity (fileName1, pathName);
+%            [CR_Lines_Temp, lines_Num]=CR_File_Selection(fileName1,pathName);
+%            [sensitivity]=CR_Sensitivity (fileName1, pathName);
+            [frequency] = CR_Frequency (fileName1, pathName);
         else
-%             [CR_Lines_Temp, lines_Num]=CR_File_Selection(fileName,pathName);
-            [sensitivity]=CR_Sensitivity (fileName, pathName);
+%            [CR_Lines_Temp, lines_Num]=CR_File_Selection(fileName,pathName);
+%            [sensitivity]=CR_Sensitivity (fileName, pathName);
+            [frequency] = CR_Frequency (fileName, pathName);
         end
 
-        CR_Sensitivity_Export(export_FileName, sensitivity);        
+%        CR_Sensitivity_Export(export_FileName, sensitivity);     
+         CR_Frequency_Export(export_FileName, frequency);
         
 %         % structurize the final data 
 %         [data_CovaRep]=CR_Synchronization(CR_Lines_Temp, lines_Num);

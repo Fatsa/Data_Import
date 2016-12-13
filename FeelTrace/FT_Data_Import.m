@@ -17,9 +17,9 @@
 % intensity_Timings
 % anger_Data,
 % anger_Timings
-function FT_Data_Import (maindir)
-    % exported file absolute path
-    export_FilePath=uigetdir( 'choose the export folder' );
+%function FT_Data_Import (maindir)
+function [FT_Data] = FT_Data_Import (maindir,export_FilePath)
+    
     % subfolder path
     subdir  = dir( maindir );  
     
@@ -27,6 +27,9 @@ function FT_Data_Import (maindir)
     index_List = zeros(12,12);
     % recording of the frequency data
     frequency = zeros(12,12);
+    FT_Data = zeros(1,7);
+    file_Number = 0;
+    
     % process each subfolder
     for i = 1 : length( subdir )
         % if it is not the path of folder, it will just be skipped
@@ -60,17 +63,25 @@ function FT_Data_Import (maindir)
 %              expectation_Lines, intensity_Lines, fear_Lines, anger_Lines, ...
 %              happiness_Lines, saddness_Lines, disgust_Lines, contempt_Lines, ... 
 %              amusement_Lines]=FT_File_Selection(fileName1,pathName);
-            [temp_Frequency, index_List]=FT_Frequency (fileName1, pathName,index_List);
-            [frequency] = FT_Frequency_FinalMerge (temp_Frequency, frequency, index_List);
+
+%          Calculation of Frequency
+%             [temp_Frequency, index_List]=FT_Frequency (fileName1, pathName,index_List);
+%             [frequency] = FT_Frequency_FinalMerge (temp_Frequency, frequency, index_List);
+            [FT_Data1] = FT_Universality (fileName1, pathName,index_List);
         else
 %             [lines_Num, valence_Lines, arousal_Lines, power_Lines, ... 
 %             expectation_Lines, intensity_Lines, fear_Lines, anger_Lines, ... 
 %             happiness_Lines, saddness_Lines, disgust_Lines, contempt_Lines, ... 
 %             amusement_Lines]=FT_File_Selection(fileName,pathName);
-            [temp_Frequency, index_List]=FT_Frequency (fileName, pathName,index_List);
-            [frequency] = FT_Frequency_FinalMerge (temp_Frequency, frequency, index_List);
+
+%          Calculation of Frequency
+%             [temp_Frequency, index_List]=FT_Frequency (fileName, pathName,index_List);
+%             [frequency] = FT_Frequency_FinalMerge (temp_Frequency, frequency, index_List);
+            [FT_Data1] = FT_Universality (fileName, pathName,index_List);
         end
-            
+        
+        [FT_Data, file_Number] = FT_Universality_Merge(FT_Data, FT_Data1, file_Number);
+        
 %         % synchronize the data of each features and merge them in one data
 %         % strucutre
 %         [data_FeelTrace]=FT_Synchronization(lines_Num, valence_Lines, arousal_Lines, power_Lines, expectation_Lines, intensity_Lines, fear_Lines, anger_Lines, happiness_Lines, saddness_Lines, disgust_Lines, contempt_Lines, amusement_Lines);
@@ -82,5 +93,35 @@ function FT_Data_Import (maindir)
 %         [ov_Data_FeelTrace]=FT_Data_Merge(data_FeelTrace);
 %         FT_Export_Data(export_FileName,ov_Data_FeelTrace);
     end
-    FT_Frequency_Export(export_FileName, frequency);
+%    FT_Frequency_Export(export_FileName, frequency);
+end
+
+function [FT_Data,file_Number] = FT_Universality_Merge(FT_Data, FT_Data1,file_Number)
+    if 0 == file_Number
+        FT_Data = FT_Data1;
+    else
+        temp_length = size (FT_Data1);
+        temp = zeros(temp_length(1), 7);
+        target_length = size (FT_Data);
+        
+        % compare the length
+        if temp_length(1) < target_length(1)
+            for i = 1 : temp_length(1)
+                for j = 1 : 7 
+                    FT_Data (i,j) = (FT_Data(i,j)*file_Number +...
+                        FT_Data1(i,j))/(file_Number+1);
+                end
+            end
+        else
+            for i = 1 : target_length(1)
+                for j =1 : 7
+                    FT_Data1 (i,j) = (FT_Data(i,j)*file_Number +...
+                        FT_Data1(i,j))/(file_Number+1);
+                end
+            end
+            FT_Data = FT_Data1;
+        end
+    end
+    
+    file_Number = file_Number +1;
 end
