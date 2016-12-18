@@ -8,7 +8,7 @@ function LIWC_TxtProcess(fileName, pathName, export_FilePath)
 end
 
 function LIWC_TxtSegment(data_Cells, fileID, export_FilePath)
-    path = strcat(export_FilePath,'/',fileID);
+    path = strcat(export_FilePath,fileID);
     fID=fopen(path,'w');
     %labeling the content of the real sentence
     % 0 means true

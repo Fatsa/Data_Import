@@ -1,7 +1,8 @@
 
 function LIWC_Data_Import (maindir)
     % exported file absolute path
-    export_FilePath=uigetdir( 'choose the export folder' );
+    %export_FilePath=uigetdir( 'choose the export folder' );
+    export_FilePath = '/Users/village/Desktop/Text/Prudence_Output/';
     % subfolder path
     subdir = dir (maindir);
     % process each subfolder
@@ -28,8 +29,8 @@ function LIWC_Data_Import (maindir)
 
         % fullfile the absolute path of txt file
         pathName = fullfile( maindir, subdir(i).name);
-        export_FilePath = strcat(export_FilePath,'/');
-        export_FileName = strcat(export_FilePath,subdir(i).name);
+        %export_FilePath = strcat(export_FilePath,'/');
+        %export_FileName = strcat(export_FilePath,subdir(i).name);
 
         % process each txt file
         if  ~iscell(fileName)
@@ -38,13 +39,13 @@ function LIWC_Data_Import (maindir)
             %LIWC_Sensitivity (fileName1, pathName);
             
             % process the txt file
-            LIWC_TxtProcess(fileName1, pathName);
+            LIWC_TxtProcess(fileName1, maindir, export_FilePath);
         else
             % calculate the sensitivity
             %LIWC_Sensitivity (fileName, pathName);
             
             % process the txt file
-             LIWC_TxtProcess(fileName, pathName);
+             LIWC_TxtProcess(fileName, maindir, export_FilePath);
         end
         
 %        LIWC_Sensitivity_Export(export_FileName, sensitivity);  
